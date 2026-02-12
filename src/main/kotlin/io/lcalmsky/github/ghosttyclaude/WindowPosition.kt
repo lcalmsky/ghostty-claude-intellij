@@ -39,10 +39,9 @@ enum class WindowPosition(val label: String) {
         val widthPx = (screenWidth * widthRatio).toInt()
         val y = insets.top
 
-        // Ghostty window-width/height는 셀(글자) 단위
-        // 대략적인 셀 크기: 가로 ~9px, 세로 ~18px (일반적인 터미널 폰트 기준)
-        val cols = widthPx / 9
-        val rows = screenHeight / 18
+        val config = GhosttyConfigReader.read()
+        val cols = ((widthPx - 2 * config.paddingX) / config.cellWidth()).toInt()
+        val rows = ((screenHeight - 2 * config.paddingY) / config.cellHeight()).toInt()
 
         return listOf(
             "--window-position-x=$x",

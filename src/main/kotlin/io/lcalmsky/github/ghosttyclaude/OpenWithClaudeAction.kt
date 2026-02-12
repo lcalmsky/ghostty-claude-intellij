@@ -17,9 +17,9 @@ class OpenWithClaudeAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
-        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
-        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
         val projectPath = project.basePath ?: return
+        val editor = e.getData(CommonDataKeys.EDITOR)
+        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE)
 
         val manager = ClaudeSessionManager()
 
@@ -30,28 +30,31 @@ class OpenWithClaudeAction : AnAction() {
         }
 
         val sessionName = manager.getSessionName(projectPath)
-        val fileRef = buildFileRef(editor, virtualFile)
+        val fileRef = if (editor != null && virtualFile != null) buildFileRef(editor, virtualFile) else null
         val autoFocus = GhosttyClaudeSettings.getInstance().state.autoFocusGhostty
 
         executor.submit {
             try {
                 when {
                     !manager.sessionExists(sessionName) -> {
-                        // 첫 실행: Claude Code만 시작 (컨텍스트 전달 안 함)
-                        // 창 위치/크기는 Ghostty CLI args로 전달됨
                         manager.launchNewSession(sessionName, projectPath)
                     }
                     !manager.isSessionAttached(sessionName) -> {
-                        // re-attach: 창 위치/크기는 Ghostty CLI args로 전달됨
                         manager.reattachSession(sessionName)
-                        executor.schedule({
-                            manager.sendKeys(sessionName, fileRef)
-                        }, 500, TimeUnit.MILLISECONDS)
+                        if (fileRef != null) {
+                            executor.schedule({
+                                manager.sendKeys(sessionName, fileRef)
+                            }, 500, TimeUnit.MILLISECONDS)
+                        }
                     }
                     else -> {
-                        manager.sendKeys(sessionName, fileRef)
-                        if (autoFocus) {
-                            Thread.sleep(200)
+                        if (fileRef != null) {
+                            manager.sendKeys(sessionName, fileRef)
+                            if (autoFocus) {
+                                Thread.sleep(200)
+                                manager.activateGhostty()
+                            }
+                        } else {
                             manager.activateGhostty()
                         }
                     }
@@ -65,9 +68,7 @@ class OpenWithClaudeAction : AnAction() {
     }
 
     override fun update(e: AnActionEvent) {
-        e.presentation.isEnabledAndVisible =
-            e.getData(CommonDataKeys.EDITOR) != null &&
-            e.getData(CommonDataKeys.VIRTUAL_FILE) != null
+        e.presentation.isEnabledAndVisible = e.project != null
     }
 
     companion object {

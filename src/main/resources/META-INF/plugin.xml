@@ -54,6 +54,7 @@
             <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="meta alt K"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt K"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>

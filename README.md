@@ -61,15 +61,16 @@ Output: `build/distributions/ghostty-claude-intellij-<version>.zip`
 
 ### Launch Claude Code
 
-1. Open any file in the editor
-2. Press `Cmd+Opt+K`
-3. A Ghostty window opens with Claude Code running in the project directory
+1. Press `Cmd+Opt+K` from anywhere in IntelliJ (editor, project tree, terminal, etc.)
+2. A Ghostty window opens with Claude Code running in the project directory
 
 ### Send File Context
 
-1. Place your cursor on a line (or select a block of code)
+1. Place your cursor on a line (or select a block of code) in the editor
 2. Press `Cmd+Opt+K`
 3. `@/path/to/File.kt:42` appears in Claude Code's input — type your question and press Enter
+
+> When pressed outside the editor (e.g. project tree, tool windows), the shortcut opens or focuses the Ghostty window without sending file context.
 
 ### Multiple Projects
 
@@ -87,9 +88,49 @@ Each IntelliJ project window gets its own Ghostty session. When using git worktr
 | Skip permission prompts | Launches Claude Code with `--dangerously-skip-permissions` |
 | Verbose output | Launches Claude Code with `--verbose` |
 | Additional arguments | Custom CLI arguments (e.g. `--model sonnet`) |
+| Window position | Controls where the Ghostty window appears (Left/Right half, thirds, etc.) |
 | Auto-focus Ghostty | Automatically switch to Ghostty window after sending context |
 
 > Note: Changing launch options only takes effect for new sessions. Close the existing Ghostty window and press the shortcut again to start a new session with updated options.
+
+## Recommended Configuration
+
+### tmux — Enable Mouse Scrolling
+
+The plugin runs Claude Code inside a tmux session. By default tmux disables mouse scrolling, so add this to your `~/.tmux.conf`:
+
+```bash
+set -g mouse on
+```
+
+Apply to running sessions without restarting:
+
+```bash
+tmux set -g mouse on
+```
+
+### Ghostty — Window Sizing
+
+The plugin reads your Ghostty config (`~/.config/ghostty/config`) to calculate window size accurately. The following settings are used:
+
+```
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 14
+window-padding-x = 8
+window-padding-y = 4
+```
+
+If you change your font or font size, the window sizing adjusts automatically — no plugin reconfiguration needed.
+
+### IntelliJ — Ghostty Terminal Compatibility
+
+When launching IntelliJ from a Ghostty terminal via `idea .`, IntelliJ may show errors due to the `TERM=xterm-ghostty` environment variable. Add this alias to your `~/.zshrc`:
+
+```bash
+alias idea='TERM=xterm-256color idea'
+```
+
+This overrides the TERM variable only for IntelliJ while preserving Ghostty's terminal features for normal shell usage.
 
 ## License
 

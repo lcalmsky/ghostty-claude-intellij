@@ -7,13 +7,14 @@ import java.io.File
 import java.security.MessageDigest
 
 class ClaudeSessionManager {
-
     fun getSessionName(projectPath: String): String {
         val dirName = File(projectPath).name
-        val hash = MessageDigest.getInstance("MD5")
-            .digest(projectPath.toByteArray())
-            .take(3)
-            .joinToString("") { "%02x".format(it) }
+        val hash =
+            MessageDigest
+                .getInstance("MD5")
+                .digest(projectPath.toByteArray())
+                .take(3)
+                .joinToString("") { "%02x".format(it) }
         return "claude-$dirName-$hash"
     }
 
@@ -24,17 +25,26 @@ class ClaudeSessionManager {
 
     fun isSessionAttached(sessionName: String): Boolean {
         val tmux = findTmuxPath() ?: return false
-        val result = runCommandOutput(
-            tmux, "list-sessions", "-F", "#{session_name}:#{session_attached}"
-        )
+        val result =
+            runCommandOutput(
+                tmux,
+                "list-sessions",
+                "-F",
+                "#{session_name}:#{session_attached}",
+            )
         return result.lines().any { it == "$sessionName:1" }
     }
 
-    fun launchNewSession(sessionName: String, projectPath: String) {
-        val ghosttyPath = findGhosttyPath()
-            ?: throw IllegalStateException("Ghostty not found")
-        val tmuxPath = findTmuxPath()
-            ?: throw IllegalStateException("tmux not found. Install with: brew install tmux")
+    fun launchNewSession(
+        sessionName: String,
+        projectPath: String,
+    ) {
+        val ghosttyPath =
+            findGhosttyPath()
+                ?: throw IllegalStateException("Ghostty not found")
+        val tmuxPath =
+            findTmuxPath()
+                ?: throw IllegalStateException("tmux not found. Install with: brew install tmux")
 
         val claudeArgs = GhosttyClaudeSettings.getInstance().buildClaudeArgs()
         val argsStr = if (claudeArgs.isNotBlank()) " $claudeArgs" else ""
@@ -44,17 +54,26 @@ class ClaudeSessionManager {
 
         val cmd = mutableListOf(ghosttyPath)
         cmd += windowPositionArgs()
-        cmd += listOf("-e", tmuxPath, "new-session", "-s", sessionName,
-            "zsh -lic '$shellCommand'")
+        cmd +=
+            listOf(
+                "-e",
+                tmuxPath,
+                "new-session",
+                "-s",
+                sessionName,
+                "zsh -lic '$shellCommand'",
+            )
 
         ProcessBuilder(cmd).start()
     }
 
     fun reattachSession(sessionName: String) {
-        val ghosttyPath = findGhosttyPath()
-            ?: throw IllegalStateException("Ghostty not found")
-        val tmuxPath = findTmuxPath()
-            ?: throw IllegalStateException("tmux not found")
+        val ghosttyPath =
+            findGhosttyPath()
+                ?: throw IllegalStateException("Ghostty not found")
+        val tmuxPath =
+            findTmuxPath()
+                ?: throw IllegalStateException("tmux not found")
 
         val cmd = mutableListOf(ghosttyPath)
         cmd += windowPositionArgs()
@@ -65,11 +84,19 @@ class ClaudeSessionManager {
 
     private fun windowPositionArgs(): List<String> {
         val posName = GhosttyClaudeSettings.getInstance().state.windowPosition
-        val position = try { WindowPosition.valueOf(posName) } catch (_: Exception) { WindowPosition.DEFAULT }
+        val position =
+            try {
+                WindowPosition.valueOf(posName)
+            } catch (_: Exception) {
+                WindowPosition.DEFAULT
+            }
         return position.toGhosttyArgs()
     }
 
-    fun sendKeys(sessionName: String, text: String) {
+    fun sendKeys(
+        sessionName: String,
+        text: String,
+    ) {
         val tmux = findTmuxPath() ?: return
         ProcessBuilder(tmux, "send-keys", "-t", sessionName, "-l", text)
             .start()
@@ -83,23 +110,26 @@ class ClaudeSessionManager {
             .waitFor()
     }
 
-    fun notifyError(project: Project?, message: String) {
+    fun notifyError(
+        project: Project?,
+        message: String,
+    ) {
         if (project == null) return
-        NotificationGroupManager.getInstance()
+        NotificationGroupManager
+            .getInstance()
             .getNotificationGroup("GhosttyClaude")
             .createNotification(message, NotificationType.ERROR)
             .notify(project)
     }
 
-    fun findGhosttyPath(): String? {
-        return findBinary("ghostty", "/Applications/Ghostty.app/Contents/MacOS/ghostty")
-    }
+    fun findGhosttyPath(): String? = findBinary("ghostty", "/Applications/Ghostty.app/Contents/MacOS/ghostty")
 
-    fun findTmuxPath(): String? {
-        return findBinary("tmux", "/opt/homebrew/bin/tmux", "/usr/local/bin/tmux")
-    }
+    fun findTmuxPath(): String? = findBinary("tmux", "/opt/homebrew/bin/tmux", "/usr/local/bin/tmux")
 
-    private fun findBinary(name: String, vararg fallbackPaths: String): String? {
+    private fun findBinary(
+        name: String,
+        vararg fallbackPaths: String,
+    ): String? {
         val whichResult = runCommandOutput("/usr/bin/which", name).trim()
         if (whichResult.isNotEmpty() && File(whichResult).exists()) {
             return whichResult
@@ -112,8 +142,8 @@ class ClaudeSessionManager {
         return null
     }
 
-    private fun runCommand(vararg command: String): Int {
-        return try {
+    private fun runCommand(vararg command: String): Int =
+        try {
             ProcessBuilder(*command)
                 .redirectErrorStream(true)
                 .start()
@@ -121,24 +151,21 @@ class ClaudeSessionManager {
         } catch (e: Exception) {
             -1
         }
-    }
 
-    private fun runCommandOutput(vararg command: String): String {
-        return try {
-            val process = ProcessBuilder(*command)
-                .redirectErrorStream(true)
-                .start()
+    private fun runCommandOutput(vararg command: String): String =
+        try {
+            val process =
+                ProcessBuilder(*command)
+                    .redirectErrorStream(true)
+                    .start()
             val output = process.inputStream.bufferedReader().readText()
             process.waitFor()
             output
         } catch (e: Exception) {
             ""
         }
-    }
 
     companion object {
-        fun shellEscape(value: String): String {
-            return "'" + value.replace("'", "'\\''") + "'"
-        }
+        fun shellEscape(value: String): String = "'" + value.replace("'", "'\\''") + "'"
     }
 }

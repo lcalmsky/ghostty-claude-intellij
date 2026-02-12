@@ -36,15 +36,18 @@ class ClaudeSessionManager {
         val tmuxPath = findTmuxPath()
             ?: throw IllegalStateException("tmux not found. Install with: brew install tmux")
 
-        // 경로에서 double quote만 이스케이프 (single-quote 안에서 사용)
-        val escapedPath = projectPath.replace("\"", "\\\"")
-        val shellCommand = "cd \"$escapedPath\" && claude"
+        val claudeArgs = GhosttyClaudeSettings.getInstance().buildClaudeArgs()
+        val argsStr = if (claudeArgs.isNotBlank()) " $claudeArgs" else ""
 
-        ProcessBuilder(
-            ghosttyPath,
-            "-e", tmuxPath, "new-session", "-s", sessionName,
-            "zsh -lic '$shellCommand'"
-        ).start()
+        val escapedPath = projectPath.replace("\"", "\\\"")
+        val shellCommand = "cd \"$escapedPath\" && claude$argsStr"
+
+        val cmd = mutableListOf(ghosttyPath)
+        cmd += windowPositionArgs()
+        cmd += listOf("-e", tmuxPath, "new-session", "-s", sessionName,
+            "zsh -lic '$shellCommand'")
+
+        ProcessBuilder(cmd).start()
     }
 
     fun reattachSession(sessionName: String) {
@@ -53,10 +56,17 @@ class ClaudeSessionManager {
         val tmuxPath = findTmuxPath()
             ?: throw IllegalStateException("tmux not found")
 
-        ProcessBuilder(
-            ghosttyPath,
-            "-e", tmuxPath, "attach-session", "-t", sessionName
-        ).start()
+        val cmd = mutableListOf(ghosttyPath)
+        cmd += windowPositionArgs()
+        cmd += listOf("-e", tmuxPath, "attach-session", "-t", sessionName)
+
+        ProcessBuilder(cmd).start()
+    }
+
+    private fun windowPositionArgs(): List<String> {
+        val posName = GhosttyClaudeSettings.getInstance().state.windowPosition
+        val position = try { WindowPosition.valueOf(posName) } catch (_: Exception) { WindowPosition.DEFAULT }
+        return position.toGhosttyArgs()
     }
 
     fun sendKeys(sessionName: String, text: String) {
@@ -67,7 +77,6 @@ class ClaudeSessionManager {
     }
 
     fun activateGhostty() {
-        // AppleScript로 Ghostty 활성화 - open -a 보다 포커스 유지가 안정적
         val script = """tell application "Ghostty" to activate"""
         ProcessBuilder("/usr/bin/osascript", "-e", script)
             .start()
@@ -91,12 +100,10 @@ class ClaudeSessionManager {
     }
 
     private fun findBinary(name: String, vararg fallbackPaths: String): String? {
-        // 1. Check PATH
         val whichResult = runCommandOutput("/usr/bin/which", name).trim()
         if (whichResult.isNotEmpty() && File(whichResult).exists()) {
             return whichResult
         }
-        // 2. Check known locations
         for (path in fallbackPaths) {
             if (File(path).exists()) {
                 return path

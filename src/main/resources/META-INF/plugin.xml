@@ -38,6 +38,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="GhosttyClaude" displayType="BALLOON"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="io.lcalmsky.github.ghosttyclaude.GhosttyClaudeConfigurable"
+                id="io.lcalmsky.github.ghosttyclaude.settings"
+                displayName="Ghostty Claude"/>
     </extensions>
 
     <actions>

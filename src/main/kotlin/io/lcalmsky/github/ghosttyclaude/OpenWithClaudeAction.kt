@@ -31,18 +31,18 @@ class OpenWithClaudeAction : AnAction() {
 
         val sessionName = manager.getSessionName(projectPath)
         val fileRef = buildFileRef(editor, virtualFile)
+        val autoFocus = GhosttyClaudeSettings.getInstance().state.autoFocusGhostty
 
         executor.submit {
             try {
                 when {
                     !manager.sessionExists(sessionName) -> {
+                        // 첫 실행: Claude Code만 시작 (컨텍스트 전달 안 함)
+                        // 창 위치/크기는 Ghostty CLI args로 전달됨
                         manager.launchNewSession(sessionName, projectPath)
-                        executor.schedule({
-                            manager.sendKeys(sessionName, fileRef)
-                            manager.activateGhostty()
-                        }, 3, TimeUnit.SECONDS)
                     }
                     !manager.isSessionAttached(sessionName) -> {
+                        // re-attach: 창 위치/크기는 Ghostty CLI args로 전달됨
                         manager.reattachSession(sessionName)
                         executor.schedule({
                             manager.sendKeys(sessionName, fileRef)
@@ -50,9 +50,10 @@ class OpenWithClaudeAction : AnAction() {
                     }
                     else -> {
                         manager.sendKeys(sessionName, fileRef)
-                        // IntelliJ Action 이벤트 처리 완료 후 포커스 전환되도록 딜레이
-                        Thread.sleep(200)
-                        manager.activateGhostty()
+                        if (autoFocus) {
+                            Thread.sleep(200)
+                            manager.activateGhostty()
+                        }
                     }
                 }
             } catch (ex: Exception) {

@@ -1,0 +1,54 @@
+<idea-plugin>
+    <id>io.lcalmsky.github.ghostty-claude</id>
+    <name>Ghostty Claude</name>
+    <version>0.1.0</version>
+    <vendor url="https://github.com/lcalmsky">lcalmsky</vendor>
+    <description><![CDATA[
+<p>Open <a href="https://ghostty.org/">Ghostty</a> terminal with <a href="https://claude.ai/claude-code">Claude Code</a>, passing current file and selection context from IntelliJ editor.</p>
+
+<h3>Features</h3>
+<ul>
+  <li><b>One shortcut</b> (Cmd+Opt+K / Ctrl+Alt+K) to launch Claude Code in Ghostty</li>
+  <li><b>Smart session management</b> — first press opens a new window, subsequent presses send context to the existing session</li>
+  <li><b>Selection awareness</b> — sends cursor line or selected line range as @file:line reference</li>
+  <li><b>Worktree isolation</b> — each project window gets its own independent session</li>
+  <li><b>Session recovery</b> — re-attaches to existing tmux session if Ghostty window was closed</li>
+</ul>
+
+<h3>Requirements</h3>
+<ul>
+  <li>Ghostty terminal</li>
+  <li>Claude Code CLI</li>
+  <li>tmux (<code>brew install tmux</code>)</li>
+</ul>
+]]></description>
+
+    <change-notes><![CDATA[
+<h3>0.1.0</h3>
+<ul>
+  <li>Initial release</li>
+  <li>Launch Claude Code in Ghostty with Cmd+Opt+K</li>
+  <li>Smart tmux session management (create / reuse / re-attach)</li>
+  <li>File and selection range context passing</li>
+  <li>Per-project session isolation for worktree support</li>
+</ul>
+]]></change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="GhosttyClaude" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <action id="GhosttyClaude.Open"
+                class="io.lcalmsky.github.ghosttyclaude.OpenWithClaudeAction"
+                text="Open in Ghostty with Claude"
+                description="Send current file context to Claude Code in Ghostty">
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt K"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="meta alt K"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt K"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>

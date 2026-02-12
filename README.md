@@ -25,8 +25,11 @@ The plugin creates a [tmux](https://github.com/tmux/tmux) session per project to
 
 ## Requirements
 
+> **Platform**: macOS only. Ghostty and tmux path resolution is macOS-specific (`/Applications/Ghostty.app`, `/opt/homebrew/bin/tmux`). Linux support is not yet available.
+
 | Dependency | Install |
 |------------|---------|
+| macOS | Required |
 | [Ghostty](https://ghostty.org/) | Download from ghostty.org |
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | `npm install -g @anthropic-ai/claude-code` |
 | [tmux](https://github.com/tmux/tmux) | `brew install tmux` |

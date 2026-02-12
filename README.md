@@ -1,9 +1,16 @@
 # Ghostty Claude
 
+[![JetBrains Plugin](https://img.shields.io/badge/JetBrains-Plugin-blue?logo=jetbrains)](https://plugins.jetbrains.com/)
+[![macOS](https://img.shields.io/badge/platform-macOS-lightgrey?logo=apple)](https://www.apple.com/macos/)
+[![Ghostty](https://img.shields.io/badge/terminal-Ghostty-blueviolet)](https://ghostty.org/)
+[![Claude Code](https://img.shields.io/badge/AI-Claude%20Code-orange)](https://docs.anthropic.com/en/docs/claude-code)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+[한국어](README_ko.md)
+
 IntelliJ plugin that launches [Claude Code](https://docs.anthropic.com/en/docs/claude-code) in [Ghostty](https://ghostty.org/) terminal and sends file context from the editor with a single keyboard shortcut.
 
-<!-- TODO: demo GIF here -->
-<!-- ![Demo](docs/demo.gif) -->
+![Demo](docs/demo.gif)
 
 ## Features
 
@@ -37,12 +44,13 @@ The plugin creates a [tmux](https://github.com/tmux/tmux) session per project to
 
 ## Installation
 
-### From JetBrains Marketplace
+### From JetBrains Marketplace (Coming Soon)
 
-<!-- TODO: uncomment after marketplace approval -->
-<!-- 1. IntelliJ IDEA → Settings → Plugins → Marketplace -->
-<!-- 2. Search for "Ghostty Claude" -->
-<!-- 3. Click Install → Restart -->
+> Marketplace submission is under review. Once approved, you can install using the steps below.
+
+1. IntelliJ IDEA → Settings → Plugins → Marketplace
+2. Search for **"Ghostty Claude"**
+3. Click **Install** → Restart
 
 ### From Disk
 
@@ -83,8 +91,7 @@ Each IntelliJ project window gets its own Ghostty session. When using git worktr
 
 **Settings → Tools → Ghostty Claude**
 
-<!-- TODO: settings screenshot here -->
-<!-- ![Settings](docs/settings.png) -->
+![Settings](docs/settings.png)
 
 | Option | Description |
 |--------|-------------|

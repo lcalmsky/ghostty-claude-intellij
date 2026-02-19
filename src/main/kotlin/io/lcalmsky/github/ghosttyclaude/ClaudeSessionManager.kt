@@ -50,7 +50,7 @@ class ClaudeSessionManager {
         val argsStr = if (claudeArgs.isNotBlank()) " $claudeArgs" else ""
 
         val escapedPath = projectPath.replace("\"", "\\\"")
-        val shellCommand = "cd \"$escapedPath\" && claude$argsStr"
+        val shellCommand = "cd \"$escapedPath\" && printf \"\\e]7;file://%s%s\\a\" \"\$HOST\" \"\$PWD\" && claude$argsStr"
 
         val cmd = mutableListOf(ghosttyPath)
         cmd += windowPositionArgs()

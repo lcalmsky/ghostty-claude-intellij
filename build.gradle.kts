@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.lcalmsky.github"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -30,7 +30,7 @@ kotlin {
 
 tasks {
     patchPluginXml {
-        version = "0.1.0"
+        version = "0.1.1"
         sinceBuild = "243"
         untilBuild = "253.*"
     }

@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>io.lcalmsky.github.ghostty-claude</id>
     <name>Ghostty Claude</name>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <vendor url="https://github.com/lcalmsky">lcalmsky</vendor>
     <description><![CDATA[
 <p>Open <a href="https://ghostty.org/">Ghostty</a> terminal with <a href="https://claude.ai/claude-code">Claude Code</a>, passing current file and selection context from IntelliJ editor.</p>
@@ -24,6 +24,12 @@
 ]]></description>
 
     <change-notes><![CDATA[
+<h3>0.1.2</h3>
+<ul>
+  <li>Add tmux passthrough support for OSC 7 escape sequence</li>
+  <li>Ghostty now correctly recognizes working directory in tmux environments</li>
+</ul>
+
 <h3>0.1.1</h3>
 <ul>
   <li>Fix new tab opening in home directory instead of project directory</li>

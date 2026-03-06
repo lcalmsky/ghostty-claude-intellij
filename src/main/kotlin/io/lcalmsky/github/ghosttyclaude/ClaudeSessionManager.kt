@@ -49,8 +49,12 @@ class ClaudeSessionManager {
         val claudeArgs = GhosttyClaudeSettings.getInstance().buildClaudeArgs()
         val argsStr = if (claudeArgs.isNotBlank()) " $claudeArgs" else ""
 
+        val ghosttyConfig = GhosttyConfigReader.read()
+        val tmuxSetup = TmuxConfigGenerator.toShellString(ghosttyConfig)
+        val tmuxSetupPart = if (tmuxSetup.isNotEmpty()) " && $tmuxSetup" else ""
+
         val escapedPath = projectPath.replace("\"", "\\\"")
-        val shellCommand = "cd \"$escapedPath\" && (tmux set -p allow-passthrough on 2>/dev/null || true) && printf \"\\ePtmux;\\e\\e]7;file://%s%s\\a\\e\\\\\\\\\" \"\$HOST\" \"\$PWD\" && claude$argsStr"
+        val shellCommand = "cd \"$escapedPath\" && (tmux set -p allow-passthrough on 2>/dev/null || true)$tmuxSetupPart && printf \"\\ePtmux;\\e\\e]7;file://%s%s\\a\\e\\\\\\\\\" \"\$HOST\" \"\$PWD\" && claude$argsStr"
 
         val cmd = mutableListOf(ghosttyPath)
         cmd += windowPositionArgs()

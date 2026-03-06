@@ -19,6 +19,7 @@ IntelliJ에서 단축키 하나로 [Ghostty](https://ghostty.org/) 터미널에 
 - **선택 범위 전달** — 커서 위치는 `@file:line`, 선택 블록은 `@file:start-end` 형태로 전달
 - **프로젝트별 독립 세션** — IntelliJ 프로젝트 창마다 독립된 Ghostty + Claude Code 세션 생성
 - **세션 복구** — Ghostty 창이 닫혀도 tmux 세션이 살아있으면 자동으로 재연결
+- **Ghostty 설정 동기화** — Ghostty 설정(copy-on-select, clipboard, scrollback)을 tmux에 자동 적용
 - **설정 가능** — `--dangerously-skip-permissions`, `--verbose`, 커스텀 CLI 인수 등 Settings에서 변경 가능
 
 ## 동작 방식
@@ -44,29 +45,9 @@ IntelliJ에서 단축키 하나로 [Ghostty](https://ghostty.org/) 터미널에 
 
 ## 설치
 
-### JetBrains Marketplace (준비 중)
-
-> Marketplace 등록 심사 중입니다. 승인 후 아래 방법으로 설치할 수 있습니다.
-
 1. IntelliJ IDEA → Settings → Plugins → Marketplace
 2. **"Ghostty Claude"** 검색
 3. **Install** 클릭 → 재시작
-
-### 디스크에서 설치
-
-1. [Releases](https://github.com/lcalmsky/ghostty-claude-intellij/releases)에서 최신 zip 다운로드
-2. IntelliJ IDEA → Settings → Plugins → ⚙ → **Install Plugin from Disk**
-3. zip 파일 선택 후 재시작
-
-### 소스에서 빌드
-
-```bash
-git clone https://github.com/lcalmsky/ghostty-claude-intellij.git
-cd ghostty-claude-intellij
-./gradlew buildPlugin
-```
-
-결과물: `build/distributions/ghostty-claude-intellij-<version>.zip`
 
 ## 사용법
 
@@ -104,20 +85,6 @@ IntelliJ 프로젝트 창마다 독립된 Ghostty 세션이 생성됩니다. git
 > 참고: 실행 옵션 변경은 새 세션에만 적용됩니다. 기존 Ghostty 창을 닫고 단축키를 다시 눌러야 변경된 옵션으로 시작됩니다.
 
 ## 권장 설정
-
-### tmux — 마우스 스크롤 활성화
-
-플러그인은 tmux 세션 안에서 Claude Code를 실행합니다. tmux는 기본적으로 마우스 스크롤이 비활성화되어 있으므로 `~/.tmux.conf`에 다음을 추가하세요:
-
-```bash
-set -g mouse on
-```
-
-재시작 없이 실행 중인 세션에 적용:
-
-```bash
-tmux set -g mouse on
-```
 
 ### Ghostty — 창 크기
 

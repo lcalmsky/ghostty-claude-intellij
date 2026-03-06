@@ -19,6 +19,7 @@ IntelliJ plugin that launches [Claude Code](https://docs.anthropic.com/en/docs/c
 - **Selection range** — sends `@file:line` for cursor position, `@file:start-end` for selected block
 - **Worktree isolation** — each IntelliJ project window gets its own independent Ghostty + Claude Code session
 - **Session recovery** — automatically re-attaches if the Ghostty window was closed but the tmux session is still alive
+- **Ghostty config sync** — automatically migrates Ghostty settings (copy-on-select, clipboard, scrollback) to tmux
 - **Configurable** — toggle `--dangerously-skip-permissions`, `--verbose`, or add custom CLI arguments from Settings
 
 ## How It Works
@@ -44,29 +45,9 @@ The plugin creates a [tmux](https://github.com/tmux/tmux) session per project to
 
 ## Installation
 
-### From JetBrains Marketplace (Coming Soon)
-
-> Marketplace submission is under review. Once approved, you can install using the steps below.
-
 1. IntelliJ IDEA → Settings → Plugins → Marketplace
 2. Search for **"Ghostty Claude"**
 3. Click **Install** → Restart
-
-### From Disk
-
-1. Download the latest zip from [Releases](https://github.com/lcalmsky/ghostty-claude-intellij/releases)
-2. IntelliJ IDEA → Settings → Plugins → ⚙ → **Install Plugin from Disk**
-3. Select the zip file and restart
-
-### Build from Source
-
-```bash
-git clone https://github.com/lcalmsky/ghostty-claude-intellij.git
-cd ghostty-claude-intellij
-./gradlew buildPlugin
-```
-
-Output: `build/distributions/ghostty-claude-intellij-<version>.zip`
 
 ## Usage
 
@@ -104,20 +85,6 @@ Each IntelliJ project window gets its own Ghostty session. When using git worktr
 > Note: Changing launch options only takes effect for new sessions. Close the existing Ghostty window and press the shortcut again to start a new session with updated options.
 
 ## Recommended Configuration
-
-### tmux — Enable Mouse Scrolling
-
-The plugin runs Claude Code inside a tmux session. By default tmux disables mouse scrolling, so add this to your `~/.tmux.conf`:
-
-```bash
-set -g mouse on
-```
-
-Apply to running sessions without restarting:
-
-```bash
-tmux set -g mouse on
-```
 
 ### Ghostty — Window Sizing
 

@@ -1,0 +1,232 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1772760962722,
+  "projectRoot": "/Users/jm.lee/git-repo/ghostty-claude-intellij",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Kotlin",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "build.gradle.kts"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "gradle",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "src"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "build": {
+      "path": "build",
+      "purpose": "Build output",
+      "fileCount": 2,
+      "lastAccessed": 1772760962711,
+      "keyFiles": [
+        "coroutines-javaagent.jar"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 2,
+      "lastAccessed": 1772760962711,
+      "keyFiles": [
+        "demo.gif",
+        "settings.png"
+      ]
+    },
+    "gradle": {
+      "path": "gradle",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1772760962711,
+      "keyFiles": []
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1772760962711,
+      "keyFiles": []
+    },
+    "src/test": {
+      "path": "src/test",
+      "purpose": "Test files",
+      "fileCount": 0,
+      "lastAccessed": 1772760962712,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/GhosttyClaudeConfigurable.kt",
+      "accessCount": 29,
+      "lastAccessed": 1772775221837,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/GhosttyConfigReader.kt",
+      "accessCount": 19,
+      "lastAccessed": 1772773149108,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/ClaudeSessionManager.kt",
+      "accessCount": 17,
+      "lastAccessed": 1772774568753,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 17,
+      "lastAccessed": 1772775308275,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/GhosttyClaudeSettings.kt",
+      "accessCount": 15,
+      "lastAccessed": 1772775224833,
+      "type": "file"
+    },
+    {
+      "path": "README_ko.md",
+      "accessCount": 13,
+      "lastAccessed": 1772775316884,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/TmuxConfigGenerator.kt",
+      "accessCount": 12,
+      "lastAccessed": 1772765525563,
+      "type": "file"
+    },
+    {
+      "path": "src/main/resources/META-INF/plugin.xml",
+      "accessCount": 11,
+      "lastAccessed": 1772775300470,
+      "type": "file"
+    },
+    {
+      "path": "src/test/kotlin/io/lcalmsky/github/ghosttyclaude/TmuxConfigGeneratorTest.kt",
+      "accessCount": 10,
+      "lastAccessed": 1772765251583,
+      "type": "file"
+    },
+    {
+      "path": "src/test/kotlin/io/lcalmsky/github/ghosttyclaude/GhosttyConfigReaderTest.kt",
+      "accessCount": 8,
+      "lastAccessed": 1772765273766,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 7,
+      "lastAccessed": 1772772299781,
+      "type": "directory"
+    },
+    {
+      "path": "src/test/kotlin/io/lcalmsky/github/ghosttyclaude/ClaudeSessionManagerTest.kt",
+      "accessCount": 4,
+      "lastAccessed": 1772773318105,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/WindowPosition.kt",
+      "accessCount": 3,
+      "lastAccessed": 1772765043916,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/OpenWithClaudeAction.kt",
+      "accessCount": 3,
+      "lastAccessed": 1772765044151,
+      "type": "file"
+    },
+    {
+      "path": "src",
+      "accessCount": 2,
+      "lastAccessed": 1772761257129,
+      "type": "directory"
+    },
+    {
+      "path": "~/Documents/jaime-vault/0.Journal/2026-03-06.md",
+      "accessCount": 2,
+      "lastAccessed": 1772773375973,
+      "type": "file"
+    },
+    {
+      "path": ".claude/handoff/feat-ghostty-config-tmux-sync.md",
+      "accessCount": 2,
+      "lastAccessed": 1772774560557,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/QuickActionPopupAction.kt",
+      "accessCount": 1,
+      "lastAccessed": 1772761048286,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/SendGitDiffAction.kt",
+      "accessCount": 1,
+      "lastAccessed": 1772761048700,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/SendErrorContextAction.kt",
+      "accessCount": 1,
+      "lastAccessed": 1772761048895,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin",
+      "accessCount": 1,
+      "lastAccessed": 1772761051665,
+      "type": "directory"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/ClaudeStatusBarWidget.kt",
+      "accessCount": 1,
+      "lastAccessed": 1772761051847,
+      "type": "file"
+    },
+    {
+      "path": "src/main/kotlin/io/lcalmsky/github/ghosttyclaude/ClaudeStatusBarWidgetFactory.kt",
+      "accessCount": 1,
+      "lastAccessed": 1772761052203,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 1,
+      "lastAccessed": 1772772309399,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

@@ -16,9 +16,6 @@ object GhosttyConfigReader {
         val fontSize: Double = DEFAULT_FONT_SIZE,
         val paddingX: Int = 0,
         val paddingY: Int = 0,
-        val copyOnSelect: String = "true",
-        val clipboardWrite: String = "ask",
-        val scrollbackLimit: Int? = null
     ) {
         fun cellWidth(): Double {
             val font = Font(fontFamily, Font.PLAIN, fontSize.toInt())
@@ -57,9 +54,6 @@ object GhosttyConfigReader {
         var fontSize = DEFAULT_FONT_SIZE
         var paddingX = 0
         var paddingY = 0
-        var copyOnSelect = "true"
-        var clipboardWrite = "ask"
-        var scrollbackLimit: Int? = null
 
         try {
             Files.readAllLines(configPath).forEach { line ->
@@ -77,16 +71,13 @@ object GhosttyConfigReader {
                     "font-size" -> value.toDoubleOrNull()?.let { fontSize = it }
                     "window-padding-x" -> value.split(",")[0].trim().toIntOrNull()?.let { paddingX = it }
                     "window-padding-y" -> value.split(",")[0].trim().toIntOrNull()?.let { paddingY = it }
-                    "copy-on-select" -> copyOnSelect = value
-                    "clipboard-write" -> clipboardWrite = value
-                    "scrollback-limit" -> value.toIntOrNull()?.let { scrollbackLimit = it }
                 }
             }
         } catch (_: Exception) {
             return GhosttyConfig()
         }
 
-        return GhosttyConfig(fontFamily, fontSize, paddingX, paddingY, copyOnSelect, clipboardWrite, scrollbackLimit)
+        return GhosttyConfig(fontFamily, fontSize, paddingX, paddingY)
     }
 
     private fun defaultConfigPath(): Path =

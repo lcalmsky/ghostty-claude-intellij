@@ -89,41 +89,6 @@ class GhosttyConfigReaderTest {
     }
 
     @Test
-    fun `parses copy-on-select and clipboard-write`() {
-        val configFile = tempDir.resolve("config")
-        Files.writeString(configFile, """
-            copy-on-select = clipboard
-            clipboard-write = allow-always
-            scrollback-limit = 5000
-        """.trimIndent())
-
-        val config = GhosttyConfigReader.read(configFile)
-        assertEquals("clipboard", config.copyOnSelect)
-        assertEquals("allow-always", config.clipboardWrite)
-        assertEquals(5000, config.scrollbackLimit)
-    }
-
-    @Test
-    fun `returns defaults for new fields when not specified`() {
-        val configFile = tempDir.resolve("config")
-        Files.writeString(configFile, "font-size = 14")
-
-        val config = GhosttyConfigReader.read(configFile)
-        assertEquals("true", config.copyOnSelect)
-        assertEquals("ask", config.clipboardWrite)
-        assertEquals(null, config.scrollbackLimit)
-    }
-
-    @Test
-    fun `ignores invalid scrollback-limit`() {
-        val configFile = tempDir.resolve("config")
-        Files.writeString(configFile, "scrollback-limit = abc")
-
-        val config = GhosttyConfigReader.read(configFile)
-        assertEquals(null, config.scrollbackLimit)
-    }
-
-    @Test
     fun `ignores malformed lines`() {
         val configFile = tempDir.resolve("config")
         Files.writeString(configFile, """

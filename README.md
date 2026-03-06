@@ -19,7 +19,7 @@ IntelliJ plugin that launches [Claude Code](https://docs.anthropic.com/en/docs/c
 - **Selection range** — sends `@file:line` for cursor position, `@file:start-end` for selected block
 - **Worktree isolation** — each IntelliJ project window gets its own independent Ghostty + Claude Code session
 - **Session recovery** — automatically re-attaches if the Ghostty window was closed but the tmux session is still alive
-- **Ghostty config sync** — automatically migrates Ghostty settings (copy-on-select, clipboard, scrollback) to tmux
+- **Tmux setup commands** — run custom tmux commands (mouse, clipboard, scrollback, etc.) when a session starts
 - **Configurable** — toggle `--dangerously-skip-permissions`, `--verbose`, or add custom CLI arguments from Settings
 
 ## How It Works
@@ -81,8 +81,32 @@ Each IntelliJ project window gets its own Ghostty session. When using git worktr
 | Additional arguments | Custom CLI arguments (e.g. `--model sonnet`) |
 | Window position | Controls where the Ghostty window appears (Left/Right half, thirds, etc.) |
 | Auto-focus Ghostty | Automatically switch to Ghostty window after sending context |
+| Tmux setup commands | Multi-line tmux commands to run when a new tmux session starts (one per line, supports comments) |
 
 > Note: Changing launch options only takes effect for new sessions. Close the existing Ghostty window and press the shortcut again to start a new session with updated options.
+
+### Tmux Setup Commands Examples
+
+The "Setup commands" field accepts multiple tmux commands, one per line. Lines starting with `#` are treated as comments and ignored. These commands run once when a new tmux session is created.
+
+**Default configuration:**
+```
+tmux set mouse off
+tmux set history-limit 50000
+tmux set-window-option mode-keys vi
+tmux set escape-time 0
+```
+
+The default disables mouse support to allow Ghostty's native copy/paste with `Cmd+C`. To use tmux mouse features, add `tmux set mouse on` to the setup commands.
+
+**Other examples:**
+
+| Use case | Commands |
+|----------|----------|
+| Mouse support | `tmux set mouse on` |
+| Mouse + vi copy-mode | `tmux set mouse on`<br>`tmux set-window-option mode-keys vi` |
+| With comments | `tmux set mouse off`<br>`# Use mouse for selection`<br>`tmux set mouse on` |
+| Larger scrollback | `tmux set history-limit 100000` |
 
 ## Recommended Configuration
 

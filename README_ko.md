@@ -19,7 +19,7 @@ IntelliJ에서 단축키 하나로 [Ghostty](https://ghostty.org/) 터미널에 
 - **선택 범위 전달** — 커서 위치는 `@file:line`, 선택 블록은 `@file:start-end` 형태로 전달
 - **프로젝트별 독립 세션** — IntelliJ 프로젝트 창마다 독립된 Ghostty + Claude Code 세션 생성
 - **세션 복구** — Ghostty 창이 닫혀도 tmux 세션이 살아있으면 자동으로 재연결
-- **Ghostty 설정 동기화** — Ghostty 설정(copy-on-select, clipboard, scrollback)을 tmux에 자동 적용
+- **Tmux 설정 명령어** — 세션 시작 시 실행할 tmux 명령어를 자유롭게 설정 (마우스, 클립보드, 스크롤백 등)
 - **설정 가능** — `--dangerously-skip-permissions`, `--verbose`, 커스텀 CLI 인수 등 Settings에서 변경 가능
 
 ## 동작 방식
@@ -81,8 +81,32 @@ IntelliJ 프로젝트 창마다 독립된 Ghostty 세션이 생성됩니다. git
 | Additional arguments | 커스텀 CLI 인수 (예: `--model sonnet`) |
 | Window position | Ghostty 창 위치 설정 (좌/우 절반, 1/3 등) |
 | Auto-focus Ghostty | 컨텍스트 전달 후 자동으로 Ghostty 창으로 전환 |
+| Tmux setup commands | 새 tmux 세션 시작 시 실행할 tmux 명령어 (한 줄에 하나, 주석 지원) |
 
 > 참고: 실행 옵션 변경은 새 세션에만 적용됩니다. 기존 Ghostty 창을 닫고 단축키를 다시 눌러야 변경된 옵션으로 시작됩니다.
+
+### Tmux 설정 명령어 예시
+
+"Setup commands" 필드에 여러 줄의 tmux 명령어를 입력합니다. 한 줄에 하나씩, 빈 줄은 무시되고 `#`으로 시작하는 줄은 주석으로 처리됩니다. 새 tmux 세션 생성 시 한 번 실행됩니다.
+
+**기본 설정:**
+```
+tmux set mouse off
+tmux set history-limit 50000
+tmux set-window-option mode-keys vi
+tmux set escape-time 0
+```
+
+기본값은 마우스 지원을 비활성화하여 Ghostty의 기본 복사/붙여넣기(`Cmd+C`)를 사용하도록 합니다. tmux 마우스 기능을 사용하려면 설정 명령어에 `tmux set mouse on`을 추가하세요.
+
+**다른 예시들:**
+
+| 용도 | 명령어 |
+|------|--------|
+| 마우스 지원 | `tmux set mouse on` |
+| 마우스 + vi 복사 모드 | `tmux set mouse on`<br>`tmux set-window-option mode-keys vi` |
+| 주석 포함 | `tmux set mouse off`<br>`# 마우스로 선택하려면 활성화`<br>`tmux set mouse on` |
+| 스크롤백 용량 증가 | `tmux set history-limit 100000` |
 
 ## 권장 설정
 

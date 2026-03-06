@@ -1,0 +1,7 @@
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"log"}
+{"t":0,"agent":"a5de0ff","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a5de0ff","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":31260}
+{"t":0,"agent":"a055008","agent_type":"Plan","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a055008","agent_type":"Plan","event":"agent_stop","success":true,"duration_ms":71815}
+{"t":0,"agent":"aa6f42d","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aa6f42d","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":27174}

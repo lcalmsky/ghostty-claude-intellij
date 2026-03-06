@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"git add -A && git commit -m \\\"feat: Improve tmux setup commands UI and update defaults to v0.1.4\\n\\n- Improve tmux setup commands field (JTextField → JTextArea with monospace font)\\n- Chan...",
+  "error": "Exit code 1\nERROR: Invalid commit message format.\nExpected: <type>: <TICKET> <description>\n  type: feat|fix|docs|refactor|perf|test|build|ci|chore\n  Example: feat: ACT-62 add user authentication\n  Got: feat: Improve tmux setup commands UI and update defaults to v0.1.4\n\nERROR: Invalid commit message format.\nExpected: <type>: <TICKET> <description>\n  type: feat|fix|docs|refactor|perf|test|build|ci|chore\n  Example: feat: ACT-62 add user authentication\n  Got: feat: Improve tmux setup commands UI and...",
+  "timestamp": "2026-03-06T05:36:07.644Z",
+  "retry_count": 1
+}

@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>io.lcalmsky.github.ghostty-claude</id>
     <name>Ghostty Claude</name>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <vendor url="https://github.com/lcalmsky">lcalmsky</vendor>
     <description><![CDATA[
 <p>Open <a href="https://ghostty.org/">Ghostty</a> terminal with <a href="https://claude.ai/claude-code">Claude Code</a>, passing current file and selection context from IntelliJ editor.</p>
@@ -24,10 +24,17 @@
 ]]></description>
 
     <change-notes><![CDATA[
+<h3>0.1.4</h3>
+<ul>
+  <li>Improve tmux setup commands UI — multi-line textarea with monospace font for better editing</li>
+  <li>Change default tmux mouse setting to off — use Ghostty's native Cmd+C copy (mouse off by default)</li>
+  <li>Simplify default tmux configuration — remove complex copy-mode bindings for cleaner setup</li>
+</ul>
+
 <h3>0.1.3</h3>
 <ul>
-  <li>Auto-migrate Ghostty config to tmux (copy-on-select, clipboard-write, scrollback-limit)</li>
-  <li>Enable mouse support in tmux sessions by default</li>
+  <li>Add tmux setup commands setting — run custom tmux commands (mouse, clipboard, scrollback) when a session starts</li>
+  <li>Mouse support enabled by default (<code>tmux set mouse on</code>)</li>
 </ul>
 
 <h3>0.1.2</h3>

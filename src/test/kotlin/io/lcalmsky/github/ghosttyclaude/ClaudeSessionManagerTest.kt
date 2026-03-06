@@ -56,4 +56,62 @@ class ClaudeSessionManagerTest {
         val escaped = ClaudeSessionManager.shellEscape("/Users/test/my project (1)")
         assertEquals("'/Users/test/my project (1)'", escaped)
     }
+
+    @Test
+    fun `multiline tmux commands are joined with &&`() {
+        val input = """
+            tmux set mouse on
+            tmux set history-limit 50000
+            tmux set-window-option mode-keys vi
+        """.trimIndent()
+
+        val result = input
+            .lines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .joinToString(" && ")
+
+        assertEquals(
+            "tmux set mouse on && tmux set history-limit 50000 && tmux set-window-option mode-keys vi",
+            result
+        )
+    }
+
+    @Test
+    fun `multiline tmux commands ignore comments and empty lines`() {
+        val input = """
+            tmux set mouse on
+            # comment line
+            tmux set history-limit 50000
+
+            tmux set escape-time 0
+        """.trimIndent()
+
+        val result = input
+            .lines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .joinToString(" && ")
+
+        assertEquals(
+            "tmux set mouse on && tmux set history-limit 50000 && tmux set escape-time 0",
+            result
+        )
+    }
+
+    @Test
+    fun `empty or comment-only tmux commands produce empty string`() {
+        val input = """
+            # comment
+            # another comment
+        """.trimIndent()
+
+        val result = input
+            .lines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .joinToString(" && ")
+
+        assertEquals("", result)
+    }
 }

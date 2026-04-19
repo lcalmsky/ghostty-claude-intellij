@@ -16,7 +16,7 @@ class GhosttyClaudeSettings : PersistentStateComponent<GhosttyClaudeSettings.Sta
         var autoFocusGhostty: Boolean = true,
         var additionalArgs: String = "",
         var windowPosition: String = "DEFAULT",
-        var tmuxSetupCommands: String = "tmux set mouse off\ntmux set history-limit 50000\ntmux set-window-option mode-keys vi\ntmux set escape-time 0",
+        var tmuxSetupCommands: String = "tmux set mouse on\ntmux set history-limit 50000\ntmux set-window-option mode-keys vi\ntmux set escape-time 0",
     )
 
     fun buildClaudeArgs(): String {

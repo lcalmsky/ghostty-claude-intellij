@@ -91,21 +91,21 @@ IntelliJ 프로젝트 창마다 독립된 Ghostty 세션이 생성됩니다. git
 
 **기본 설정:**
 ```
-tmux set mouse off
+tmux set mouse on
 tmux set history-limit 50000
 tmux set-window-option mode-keys vi
 tmux set escape-time 0
 ```
 
-기본값은 마우스 지원을 비활성화하여 Ghostty의 기본 복사/붙여넣기(`Cmd+C`)를 사용하도록 합니다. tmux 마우스 기능을 사용하려면 설정 명령어에 `tmux set mouse on`을 추가하세요.
+기본값은 tmux 마우스 지원을 활성화하여 스크롤과 선택을 지원합니다. Ghostty의 기본 복사/붙여넣기(`Cmd+C`)를 사용하려면 해당 줄을 `tmux set mouse off`로 변경하세요.
 
 **다른 예시들:**
 
 | 용도 | 명령어 |
 |------|--------|
-| 마우스 지원 | `tmux set mouse on` |
+| 마우스 비활성화 (Ghostty Cmd+C 사용) | `tmux set mouse off` |
 | 마우스 + vi 복사 모드 | `tmux set mouse on`<br>`tmux set-window-option mode-keys vi` |
-| 주석 포함 | `tmux set mouse off`<br>`# 마우스로 선택하려면 활성화`<br>`tmux set mouse on` |
+| 주석 포함 | `# 마우스로 선택 활성화`<br>`tmux set mouse on` |
 | 스크롤백 용량 증가 | `tmux set history-limit 100000` |
 
 ## 권장 설정

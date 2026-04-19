@@ -105,7 +105,7 @@ class GhosttyClaudeConfigurable : Configurable {
 
         // 빈 값이면 기본값 사용
         val tmuxCommands = if (s.tmuxSetupCommands.isBlank()) {
-            "tmux set mouse off\ntmux set history-limit 50000\ntmux set-window-option mode-keys vi\ntmux set escape-time 0"
+            "tmux set mouse on\ntmux set history-limit 50000\ntmux set-window-option mode-keys vi\ntmux set escape-time 0"
         } else {
             s.tmuxSetupCommands
         }

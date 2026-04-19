@@ -91,21 +91,21 @@ The "Setup commands" field accepts multiple tmux commands, one per line. Lines s
 
 **Default configuration:**
 ```
-tmux set mouse off
+tmux set mouse on
 tmux set history-limit 50000
 tmux set-window-option mode-keys vi
 tmux set escape-time 0
 ```
 
-The default disables mouse support to allow Ghostty's native copy/paste with `Cmd+C`. To use tmux mouse features, add `tmux set mouse on` to the setup commands.
+The default enables tmux mouse support for scroll and selection. To use Ghostty's native copy/paste with `Cmd+C` instead, change the command to `tmux set mouse off`.
 
 **Other examples:**
 
 | Use case | Commands |
 |----------|----------|
-| Mouse support | `tmux set mouse on` |
+| Disable mouse (use Ghostty Cmd+C) | `tmux set mouse off` |
 | Mouse + vi copy-mode | `tmux set mouse on`<br>`tmux set-window-option mode-keys vi` |
-| With comments | `tmux set mouse off`<br>`# Use mouse for selection`<br>`tmux set mouse on` |
+| With comments | `# Enable mouse for selection`<br>`tmux set mouse on` |
 | Larger scrollback | `tmux set history-limit 100000` |
 
 ## Recommended Configuration
